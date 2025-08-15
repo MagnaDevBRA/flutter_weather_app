@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../services/open_weather_api.dart';
+import '../../src/services/open_weather_api.dart';
 
 class WeatherSearch extends StatefulWidget {
-  Map<String, dynamic> coords = {};
+  final Function(Map<String, dynamic>) onValueChanged;
 
-  WeatherSearch({Key? key, this.coords = const {}}) : super(key: key);
+  WeatherSearch({Key? key, required this.onValueChanged}) : super(key: key);
   @override
   _WeatherSearchState createState() => _WeatherSearchState();
 }
@@ -39,10 +39,12 @@ class _WeatherSearchState extends State<WeatherSearch> {
     setState(() {
       _cityData = [];
     });
-    widget.coords = {
+
+    Map<String, dynamic> newCoords = {
       "lat": item['lat'],
       "lon": item['lon'],
     };
+    widget.onValueChanged(newCoords);
   }
 
   @override

@@ -25,7 +25,7 @@ class _WeatherListState extends State<WeatherList> {
 
   Future<void> fetchData(coords) async {
     try {
-      List<Map<String, dynamic>> data = await _weatherService.getCityForecast(coords.lat, coords.lon);
+      List<Map<String, dynamic>> data = await _weatherService.getCityForecast(coords['lat'], coords['lon']);
       setState(() {
         _weatherList = data;
       });
