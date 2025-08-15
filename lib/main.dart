@@ -3,8 +3,10 @@ import 'src/widgets/weather_list.dart';
 import 'src/widgets/weather_search.dart';
 import 'src/widgets/weather_view.dart';
 import './src/services/open_weather_api.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  await initializeDateFormatting('pt_BR', null);
   runApp(
     MyApp()
   );
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
       title: "Flutter Weather App",
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
             "Previsão do Tempo",
@@ -58,16 +61,12 @@ class _MyBodyState extends State<MyBody> {
       coords = newCoords;
     });
 
-    print("Atualizou o widget");
     if(coords.isNotEmpty) fetchDataView(coords);
     if(coords.isNotEmpty) fetchDataList(coords);
-    print("Fim da atualização");
   }
 
   Future<void> fetchDataView(coords) async {
     try {
-      print("Coordenadas view: $coords");
-      print("lat: ${coords['lat']}, lon: ${coords['lon']}");
       double lat = coords['lat'];
       double lon = coords['lon'];
       Map<String, dynamic> data =
@@ -83,7 +82,10 @@ class _MyBodyState extends State<MyBody> {
 
   Future<void> fetchDataList(coords) async {
     try {
-      List<Map<String, dynamic>> data = await _weatherService.getCityForecast(coords['lat'], coords['lon']);
+      double lat = coords['lat'];
+      double lon = coords['lon'];
+      List<Map<String, dynamic>> data = await _weatherService.getCityForecast(lat, lon);
+      print("Dados list: $data");
       setState(() {
         _weatherList = data;
       });
@@ -95,12 +97,14 @@ class _MyBodyState extends State<MyBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: [
-          WeatherSearch(onValueChanged: updateCoords),
-          if(_weatherData.isNotEmpty) WeatherView(weatherData: _weatherData),
-          // if(coords.isNotEmpty) WeatherList(coords: coords),
-        ],
-    );
+    return SafeArea(
+        child: Column(
+          children: [
+            WeatherSearch(onValueChanged: updateCoords),
+            if(_weatherData.isNotEmpty) WeatherView(weatherData: _weatherData),
+            if(_weatherList.isNotEmpty) WeatherList(weatherList: _weatherList),
+          ],
+        )
+      );
   }
 }

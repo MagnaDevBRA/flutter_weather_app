@@ -17,7 +17,7 @@ class _WeatherViewState extends State<WeatherView> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
-      margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
       decoration: BoxDecoration(
         color: Color(0xffafeeee),
         borderRadius: BorderRadius.circular(20),
@@ -30,19 +30,17 @@ class _WeatherViewState extends State<WeatherView> {
             child: Row(
               spacing: 10,
               children: [
-                Icon(Entypo.location, color: Colors.black, size: 20),
-                Text("${widget.weatherData['city']}, ${widget.weatherData['country']}", style: TextStyle(fontSize: 20)),
+                Icon(Entypo.location, color: Colors.black, size: 18),
+                Text("${widget.weatherData['city']}, ${widget.weatherData['country']}", style: TextStyle(fontSize: 18)),
               ],
             )
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 10),
             alignment: Alignment.center,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("${widget.weatherData['temp']}", style: TextStyle(fontSize: 60)),
-                Image.network("https://openweathermap.org/img/wn/${widget.weatherData['icon']}@2x.png", width: 80, height: 80),
+                Text("${widget.weatherData['temp']} °C", style: TextStyle(fontSize: 50)),
+                Image.network("https://openweathermap.org/img/wn/${widget.weatherData['icon']}@2x.png", width: 70, height: 70),
                 Text("${widget.weatherData['description']}", style: TextStyle(fontSize: 20)),
               ],
             )
@@ -56,36 +54,61 @@ class _WeatherViewState extends State<WeatherView> {
           Container(
             margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
             child: Row(
-              spacing: 10,
+              spacing: 110,
               children: [
-                Icon(FontAwesome5.long_arrow_alt_down, color: Colors.black, size: 18),
-                Text("${widget.weatherData['temp_min']}°C"),
-                Icon(FontAwesome5.long_arrow_alt_up, color: Colors.black, size: 18),
-                Text("${widget.weatherData['temp_max']}°C"),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Icon(FontAwesome5.long_arrow_alt_down, color: Colors.black, size: 18),
+                    Text("${widget.weatherData['temp_min']}°C"),
+                ]),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Icon(FontAwesome5.long_arrow_alt_up, color: Colors.black, size: 18),
+                    Text("${widget.weatherData['temp_max']}°C")
+                ])
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(20, 5, 10, 0),
+            child: Row(
+              spacing: 110,
+              children: [
+                Row(
+                  spacing: 5,
+                  children: [
+                    Icon(Entypo.droplet, color: Colors.black, size: 18),
+                    Text("${widget.weatherData['humidity']}%"),
+                ]),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Icon(FontAwesome5.wind, color: Colors.black, size: 18),
+                    Text("${widget.weatherData['wind_speed']} m/s"),
+                ]) 
               ],
             ),
           ),
           Container(
             margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
             child: Row(
-              spacing: 10,
+              spacing: 110,
               children: [
-                Icon(Entypo.droplet, color: Colors.black, size: 18),
-                Text("${widget.weatherData['humidity']}%"),
-                Icon(FontAwesome5.wind, color: Colors.black, size: 18),
-                Text("${widget.weatherData['wind_speed']} m/s"),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
-            child: Row(
-              spacing: 10,
-              children: [
-                Icon(Meteocons.sunrise, color: Colors.black, size: 18),
-                Text(widget.weatherData['sunrise']),
-                Icon(Meteocons.fog_sun, color: Colors.black, size: 18),
-                Text(widget.weatherData['sunset']),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Icon(Meteocons.sunrise, color: Colors.black, size: 18),
+                    Text(widget.weatherData['sunrise']),
+                ],),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Icon(Meteocons.fog_sun, color: Colors.black, size: 18),
+                    Text(widget.weatherData['sunset']),
+                ],)
+                
               ],
             ),
           ),

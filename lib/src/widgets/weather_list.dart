@@ -1,52 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/entypo_icons.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/meteocons_icons.dart';
-import '../services/open_weather_api.dart';
 
 class WeatherList extends StatefulWidget {
-  const WeatherList({super.key, required this.coords});
-  // coords = { lat: lat, lon: lon }
-  final Map<String, dynamic> coords;
+  final List<Map<String, dynamic>> weatherList;
+
+  const WeatherList({super.key, required this.weatherList});
 
   @override
   _WeatherListState createState() => _WeatherListState();
 }
 
 class _WeatherListState extends State<WeatherList> {
-  final OpenWeatherService _weatherService = OpenWeatherService();
-  List<Map<String, dynamic>> _weatherList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    if(widget.coords.isNotEmpty) fetchData(widget.coords);
-  }
-
-  Future<void> fetchData(coords) async {
-    try {
-      List<Map<String, dynamic>> data = await _weatherService.getCityForecast(coords['lat'], coords['lon']);
-      setState(() {
-        _weatherList = data;
-      });
-    } catch (e) {
-      print("Erro ao carregar dados: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+      height: 200,
       decoration: BoxDecoration(
         color: Color(0xffafeeee),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column (
-        children: [
-        ],
-      )
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        itemCount: widget.weatherList.length,
+        itemBuilder: (BuildContext context, int index) {
+          final item = widget.weatherList[index];
+          return Container (
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: const Color(0xFF001166),
+              border: Border(
+                bottom: BorderSide(
+                  width: 1.0,
+              ))
+            ),
+            child: Text(
+              "${item['day']}", 
+              style: TextStyle(
+                  color: Colors.white, 
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+              )
+            ),
+          );
+        },
+      ),  
     );
   }
 }

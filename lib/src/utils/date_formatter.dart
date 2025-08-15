@@ -12,3 +12,12 @@ String formateWeekday (String dateString) {
 
   return '${weekday[0].toUpperCase()}${weekday.substring(1)}';
 }
+
+String formateHour (int time) {
+  // converter 1755247137 em hora
+  final dateObject = DateTime.fromMillisecondsSinceEpoch(time * 1000);
+  final formatter = DateFormat('HH:mm', 'pt_BR');
+  final parts = formatter.format(dateObject).split(':');
+  
+  return '${parts[0]}:${parts[1]}';
+}
