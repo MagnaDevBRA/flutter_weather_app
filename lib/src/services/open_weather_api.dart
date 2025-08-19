@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../utils/captalize.dart';
 import '../utils/date_formatter.dart' as formatter;
 
 const String url = 'https://api.openweathermap.org/data/2.5/';
-const String apiKey = 'SUA_CHAVE_QUI';
+const String apiKey = 'SUA_CHAVE_AQUI';
 const String lang = 'pt_br';
 const String units = 'metric';
 
@@ -47,7 +48,7 @@ class OpenWeatherService {
           "country": data["sys"]["country"],
           "temp": data["main"]["temp"].round(),
           "icon": data["weather"][0]["icon"],
-          "description": data["weather"][0]["description"],
+          "description": capitalize(data["weather"][0]["description"]),
           "feels_like": data["main"]["feels_like"].round(),
           "temp_min": data["main"]["temp_min"].floor(),
           "temp_max": data["main"]["temp_max"].ceil(),
@@ -93,7 +94,7 @@ class OpenWeatherService {
               'day': newKey,
               'hour': item['dt_txt'].split(' ')[1].substring(0, 5),
               'temp': item['main']['temp'].round(),
-              'description': item['weather'][0]['description'],
+              'description': capitalize(item['weather'][0]['description']),
               'icon': item['weather'][0]['icon'],
             };
           }).toList();

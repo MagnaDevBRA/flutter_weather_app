@@ -39,7 +39,7 @@ class _WeatherViewState extends State<WeatherView> {
             alignment: Alignment.center,
             child: Column(
               children: [
-                Text("${widget.weatherData['temp']} °C", style: TextStyle(fontSize: 50)),
+                Text("${widget.weatherData['temp']}°C", style: TextStyle(fontSize: 50)),
                 Image.network("https://openweathermap.org/img/wn/${widget.weatherData['icon']}@2x.png", width: 70, height: 70),
                 Text("${widget.weatherData['description']}", style: TextStyle(fontSize: 20)),
               ],
