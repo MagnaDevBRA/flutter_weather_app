@@ -103,6 +103,24 @@ class _MyBodyState extends State<MyBody> {
             WeatherSearch(onValueChanged: updateCoords),
             if(_weatherData.isNotEmpty) WeatherView(weatherData: _weatherData),
             if(_weatherList.isNotEmpty) WeatherList(weatherList: _weatherList),
+
+            if(coords.isEmpty) Container(
+              height: 500,
+              padding: EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: Text("Visualizador de dados meteorológicos. Faça uma busca para começar.", textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Colors.grey)),
+                  ),
+                  Text("Tecnologias: Flutter e Dart", textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Colors.grey)),
+                  Text("Feito por: Magna M. V. da Silva", textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Colors.grey)),
+                  Text("2025", textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Colors.grey)),
+                ]
+              )
+            )
           ],
         )
       );
